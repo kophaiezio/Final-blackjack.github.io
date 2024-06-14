@@ -1,0 +1,70 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack</title>
+    <link rel="stylesheet" href="sp.css">
+    
+</head>
+<body>
+    <div id="game"></div>
+
+
+
+    <div id="instructions" style="display: none; margin-top: 1em; background-color: #f9f9f9; border: 1px solid #ccc; padding: 1em;">
+        <h2>Hướng dẫn chơi Blackjack</h2>
+
+        <h2>Tổng quát nhanh:</h2>
+        <p>- Bạn(Player) sẽ chơi với nhà cái(Dealer) xem ai có điểm lớn hơn.</p>
+        <p>- Số điểm tối đa không được vượt quá 21, nếu vượt quá bạn sẽ thua.</p>
+
+        <h2>Cách chơi chi tiết:</h2>
+        <h2>1. Đặt cược:</h2>
+        <p>- Nhập số tiền cược vào ô "Bet" và nhấn nút "Bet" để đặt cược.</p>
+        <p>- vào nút "Deal" để bắt đầu ván. </p>
+
+        <h2>2. Bắt đầu game:</h2>
+        <p>- Bắt đầu dealer cho bạn thấy 1 lá và lá kia không hiện.</p>
+        <p>- Bạn(player) sẽ có cho mình 2 lá trên hình và có tổng điểm hiện trên màn hình.</p>
+
+        <h2>3. Các phương án có thể lụa chọn:</h2>
+        <p> * Hit(Phát bài)</p>
+        <p> * Stand(Dừng và giữ bài)</p>
+        <p> * Double Down(Cược gấp đôi)</p>
+        <h3>3.1 Nếu bạn chọn Hit(phát bài):</h3>
+        <p>- Dealer sẽ chia thêm lá bài cho bạn.</p>
+        <p>- Ván bài sẽ tiếp tục với 3 lụa chọn trên đến có đủ 5 lá.</p>
+        <h3>3.2 Nếu bạn chọn Stand(Dừng và giữ bài):</h3>
+        <p>- Với lụa chọn này nhà cái sẽ không chia thêm lá bài cho bạn và sẽ đến phần tìm người chiến thắng.</p>
+        <h3>3.3 Nếu bạn chọn Double Down(Cược gấp đôi):</h3>
+        <p>- Bạn sẽ chia thêm 1 lá bài và cược thêm gấp đôi số tiền bạn đã cược lúc đầu.</p>
+        <p>- Nhà cái sẽ không chia lá bài cho bạn nữa mà sẽ đến phần tìm người chiến thắng.</p>
+
+        <h2>4. Cách tính điểm:</h2>
+        <p>- Với các lá bài: 2,3,4,5,6,7,8,9,10 thì điểm cũng sẽ tăng theo thứ tự.</p>
+        <p>- Với lá bài J,Q,K thì điểm sẽ bằng 10.</p>
+        <p>- Với lá bài A thì điểm sẽ bằng 1 hoặc 11, tùy thuộc vào việc giá trị nào phù hợp cho tay bài của bạn.</p>
+
+        <h2>5. Kết thúc ván:</h2>
+        <p>- Khi cả hai người chơi đều dừng nhận thêm lá bài, hoặc có một người chơi vượt quá 21 điểm là Buster(Quắc), thì game sẽ tự động tính toán kết quả và hiển thị người chiến thắng.</p>
+        <p>- Kết quả cược sẽ được cập nhật và bạn có thể bắt đầu ván mới bằng cách nhấn nút "Deal" lại.</p>
+        
+        <h2>Lưu ý:</h2>
+        <p>- Nếu tổng 2 lá đầu tiên của bạn là 21 sau khi Deal thì bạn đã thắng trừ khi nhà cái cũng như bạn nếu chất bài của bạn lớn hơn nhà cái sẽ được trả 3:2 số tiền cược thay vì 1:1 như bình thường.</p>        
+    </div>
+        
+        
+
+
+
+    
+    
+
+
+    <script src="main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', app.init)
+    </script>
+
+</body>
+</html>
