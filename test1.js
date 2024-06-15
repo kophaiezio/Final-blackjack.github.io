@@ -26,6 +26,8 @@ const app = function () {
         if(isNaN(game.inputBet.value)|| game.inputBet.value.length <1){
             game.inputBet.value = 0;
         }
+        let betAmount = Number(game.inputBet.value);
+
         if(game.inputBet.value > game.cash){
             game.inputBet.value = game.cash;
         }
@@ -37,15 +39,20 @@ const app = function () {
         game.inputBet.disabled = tog;
         game.btnBet.disabled = tog;
         if(tog){
-            game.btnBet.style.backgroundColor = "#ddd";
+            game.btnBet.style.backgroundColor = "#5cb85c";
             game.inputBet.style.backgroundColor = "#ddd";
-        }
-        else{
-            game.btnBet.style.backgroundColor = "#000";
+        } else {
+            game.btnBet.style.backgroundColor = "#ddd";
             game.inputBet.style.backgroundColor = "#fff";
         }
     }
     function setBet(){
+        if (game.bet <= 0) {
+            game.status.textContent = "Please bet in advance.";
+            lockWager(false);
+            return;
+        }
+
         game.status.textContent = "You bet $"+game.bet;
         game.cash = game.cash - game.bet;
         game.playerCash.textContent = "Player cash $"+game.cash;
@@ -76,6 +83,14 @@ const app = function () {
 
 
     function deal() {
+        if (game.bet <= 0) {
+            game.status.textContent = "Please bet in advance.";
+            lockWager(false);
+            return;
+        }
+
+
+
         game.dealerHand = [];
         game.playerHand = [];
         game.dealerScore.textContent = "*";
@@ -127,15 +142,23 @@ const app = function () {
         }
     
         game.bet *= 2;
-        game.cash -= game.bet / 2; // Subtract the additional bet amount
+        game.cash -= game.bet + game.bet / 2; // Subtract the additional bet amount
         game.playerCash.textContent = "Player cash $" + game.cash;
         takeCard(game.playerHand, game.playerCards, false);
         updateCount();
         turnOff(game.btnDoubleDown);
         turnOff(game.btnHit);
-        turnOff(game.btnStand);
-        findWinner(); // Call findWinner directly after taking one card
+        turnOn(game.btnStand);
+        game.status.textContent =" Player Bet now is " + (game.bet + game.bet / 2)+"$" +" Stand to find Winners";
+
+        let player = scorer(game.playerHand);
+        if (player > 21) {
+            game.status.textContent =" Player Bet now is " + (game.bet + game.bet / 2)+"$"+". " ;
+            findWinner();
+        }
+
     }
+
 
 
 
@@ -172,7 +195,7 @@ const app = function () {
             }
             if(player == dealer){
                 game.status.textContent = "Draw no winers" +player+" ";
-                game.cash = game.cash + game.bet;
+                game.cash += (game.bet * 2) ;
             }
             else if((player <22 && player > dealer)|| dealer>21){
                 
@@ -189,7 +212,8 @@ const app = function () {
                 game.bet = 0;
             }
         }
-
+        game.bet = 0;
+        game.inputBet.value = 0;
 
         updateCash();
         scoreBoard();
@@ -198,6 +222,8 @@ const app = function () {
         turnOff(game.btnStand);
         turnOff(game.btnDoubleDown);
         turnOn(game.btnDeal);
+
+        
 
 
     }
@@ -258,10 +284,20 @@ const app = function () {
             dealerPlay(dealer);
         }
         if(dealer ==21 && game.dealerHand.length == 2){
-            game.status.textContent = "Dealer got BlackJack";
+            game.status.textContent = "Dealer got BlackJack ";
+            game.cardBack.style.display = "none";
+            turnOff(game.btnDoubleDown);
             gameEnd();
             findWinner();
         }
+        // Kiểm tra nếu player có Blackjack với 2 lá đầu tiên
+        if (player === 21 && game.playerHand.length === 2) {
+            turnOff(game.btnHit); // Không cho chia thêm bài cho player
+            game.cardBack.style.display = "none"; // Hiện hết bài của dealer
+            gameEnd();
+            findWinner(); // Tìm người thắng cuộc
+        }    
+
     }
     function scoreAce(val,aces) {
         if(val<21){
@@ -362,11 +398,11 @@ const app = function () {
    
     function turnOff(btn) {
         btn.disabled = true;
-        btn.style.backgroundcolor = "#ddd";
+        btn.style.backgroundColor = "#6c757d";
     }
     function turnOn(btn) {
         btn.disabled = false;
-        btn.style.backgroundcolor = "#000";
+        btn.style.backgroundColor = "#5cb85c";
     }
 
 
@@ -508,6 +544,9 @@ const app = function () {
         game.btnHowToPlay.textContent = "How to Play";
         game.btnHowToPlay.classList.add('btn');
         game.dashboard.append(game.btnHowToPlay);
+
+
+        
 
         
 

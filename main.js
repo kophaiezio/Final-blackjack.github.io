@@ -197,7 +197,7 @@ const app = function () {
                 game.bet = 0;
             }
         }
-
+        game.bet = 0;
 
         updateCash();
         scoreBoard();
