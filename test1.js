@@ -127,23 +127,15 @@ const app = function () {
         }
     
         game.bet *= 2;
-        game.cash -= game.bet + game.bet / 2; // Subtract the additional bet amount
+        game.cash -= game.bet / 2; // Subtract the additional bet amount
         game.playerCash.textContent = "Player cash $" + game.cash;
         takeCard(game.playerHand, game.playerCards, false);
         updateCount();
         turnOff(game.btnDoubleDown);
         turnOff(game.btnHit);
-        turnOn(game.btnStand);
-        game.status.textContent =" Player Bet now is " + (game.bet + game.bet / 2)+"$" +" Stand to find Winners";
-
-        let player = scorer(game.playerHand);
-        if (player > 21) {
-            game.status.textContent =" Player Bet now is " + (game.bet + game.bet / 2)+"$"+". " ;
-            findWinner();
-        }
-
+        turnOff(game.btnStand);
+        findWinner(); // Call findWinner directly after taking one card
     }
-
 
 
 
@@ -180,7 +172,7 @@ const app = function () {
             }
             if(player == dealer){
                 game.status.textContent = "Draw no winers" +player+" ";
-                game.cash += (game.bet * 2) ;
+                game.cash = game.cash + game.bet;
             }
             else if((player <22 && player > dealer)|| dealer>21){
                 
@@ -267,19 +259,9 @@ const app = function () {
         }
         if(dealer ==21 && game.dealerHand.length == 2){
             game.status.textContent = "Dealer got BlackJack";
-            game.cardBack.style.display = "none";
-            turnOff(game.btnDoubleDown);
             gameEnd();
             findWinner();
         }
-        // Kiểm tra nếu player có Blackjack với 2 lá đầu tiên
-        if (player === 21 && game.playerHand.length === 2) {
-            turnOff(game.btnHit); // Không cho chia thêm bài cho player
-            game.cardBack.style.display = "none"; // Hiện hết bài của dealer
-            gameEnd();
-            findWinner(); // Tìm người thắng cuộc
-        }    
-
     }
     function scoreAce(val,aces) {
         if(val<21){
@@ -526,9 +508,6 @@ const app = function () {
         game.btnHowToPlay.textContent = "How to Play";
         game.btnHowToPlay.classList.add('btn');
         game.dashboard.append(game.btnHowToPlay);
-
-
-        
 
         
 
